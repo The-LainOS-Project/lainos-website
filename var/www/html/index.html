@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- CSS only cinema, whatever -->
+  <!-- Why people use JS frameworks if I can do this with my hands in notepad++ ? -->
+<head>
+
+  <meta charset="UTF-8">
+   <title> ~ NAVI ~ </title>
+  <style>
+    @font-face {
+      font-family: 'vga';
+      src: url('vga-font.ttf') format('truetype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000000;
+      font-family: 'vga', 'Courier New', monospace;
+    }
+
+    .terminal {
+      width: 100%;
+      background: #000000;
+      margin: 0;
+      padding: 0;
+      visibility: visible;
+    }
+
+    .log-line {
+      display: block;
+      font-size: 17px;
+      line-height: 0.35;
+      color: #eaeaea;
+      white-space: pre-wrap;
+      margin: 0;
+      padding: 0;
+      opacity: 0;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+                   0 0 10px rgba(255, 255, 255, 0.3),
+                   0 0 15px rgba(255, 255, 255, 0.2);
+      animation: terminalPop 0.001s step-end forwards;
+      letter-spacing: 1px;
+      font-weight: normal;
+    }
+
+    @keyframes terminalPop {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+
+    .ok-highlight {
+      color: #2ecc2e;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(0, 255, 0, 0.5),
+                   0 0 10px rgba(0, 255, 0, 0.3),
+                   0 0 15px rgba(0, 255, 0, 0.2);
+      display: inline;
+      letter-spacing: 0;
+    }
+
+    .terminal {
+      font-size: 0;
+      height: 100vh;
+    }
+    .log-line {
+      font-size: 17px;
+    }
+
+:root {
+    --scan-width: 2px;
+    --scan-color: rgba(0, 0, 0, 0.77);
+    --scan-z-index: 2147483648;
+    --scan-opacity: 0.77;
+    --scan-fps: 60;
+}
+
+
+    .scanlines {
+    position: relative;
+
+}
+
+.scanlines:before,
+.scanlines:after {
+    display: block;
+    pointer-events: none;
+    content: '';
+    position: absolute;
+}
+
+.scanlines:before {
+    width: 100%;
+    height: var(--scan-width);
+    z-index: calc(var(--scan-z-index) + 1);
+    background: var(--scan-color);
+    opacity: var(--scan-opacity);
+    box-shadow:
+    0 -50vh 0 var(--scan-color),
+    0 -100vh 0 var(--scan-color),
+    0 200vh 0 var(--scan-color);
+    animation: scanline 24s linear infinite;
+}
+
+.scanlines:after {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--scan-z-index);
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        var(--scan-color) 51%
+    );
+    background-size: 100% calc(var(--scan-width) * 2);
+    animation: scanlines 1s steps(60) infinite;
+}
+
+@keyframes scanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+}
+
+
+@keyframes newTerminal {
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+
+}
+
+.terminal2 {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100vh;
+  background: rgb(0, 0, 0);
+  animation: newTerminal 0.001s forwards;
+}
+
+.grey_start {
+    color: grey;
+    text-shadow: 0 0 5px rgba(160, 160, 160, 0.5),
+             0 0 10px rgba(160, 160, 160, 0.3),
+             0 0 15px rgba(160, 160, 160, 0.2);
+}
+
+
+.error_failed {
+    color: red;
+    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5),
+             0 0 10px rgba(255, 0, 0, 0.3),
+             0 0 15px rgba(255, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.login_screen {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+  color: white;
+  background: black;
+/*  background-image: url('background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;*/
+  filter: contrast(1.7) brightness(0.77);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  animation: login_appear forwards;
+  animation-delay: 8.7s;
+}
+
+@keyframes login_appear{
+  to {
+    visibility : visible;
+  }
+}
+
+.login_area {
+  font-family: "Lucida Console";
+  font-size: 27px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  text-decoration: none;
+}
+
+.login_area a {
+  background-color: black;
+  padding: 17px;
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.77), 0 0 20px rgba(255, 255, 255, 0.47);
+  font-size: 35px;
+}
+.login_area a:hover {
+  background-color: #0c087c;
+  color: #7cffff;
+  box-shadow: 0px 0px 27px 7px rgba(12,8,124,0.9);
+  /*font-weight: bold;*/
+  text-decoration: none;
+  text-shadow: none;
+  font-size: 35px;
+}
+.profile_field {
+
+  background-color:#00000077;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.lain_profile_picture {
+  animation-name: fade_in;
+  animation-delay: 8.8s;
+  animation-duration: 0.7s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes fade_in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+  </style>
+</head>
+<body class="scanlines">
+
+<!-- Putting these in browser cache so that the systemd boot loading process is actually useful -->
+  <img src="background1.jpg" alt="" style="visibility: hidden; display: none;"/>
+  <img src="background2.jpg" alt="" style="visibility: hidden; display: none;"/>
+  <!-- almost 4got-->
+  <img src="LainOS.png" alt="" style="visibility: hidden; display: none;"/>
+  <!-- you wouldn't forget  4get.ca-->
+
+<div class="login_screen">
+  <div class="login_area">
+    <div class="profile_field">
+      <h3 style="margin-bottom: 44px; animation-name: fade_in; animation-duration: 1.2s; animation-delay: 8.8s;"><center style="color: #37c4c4; text-shadow: 0 0 5px #37c4c473, 0 0 10px #37c4c470, 0 0 20px #37c4c4bd, 0 0 40px #37c4c4;"> <span style="font-family : 'vga', 'Courier New', monospace;"><i>Welcome back, Lain</i> </span></center> </h3>
+      <hr>
+    <img src="WiredLogIn.gif" alt="Wired eye login lain  gif" style="margin-bottom: 20px;" class="lain_profile_picture">
+    <br>
+    <br>
+    <center><a href="/landing.html"><span style="font-family: 'vga', 'Courier New', monospace;"> &gt; CONNECT TO THE WIRED &lt;</span></a></center>
+    </div>
+  </div>
+</div>
+
+<div class="terminal">
+  <div class="terminal2" style="background-color: black; z-index: 999; animation: newTerminal 0.001s forwards 4.80s;">
+    <div class="log-line" style="animation-delay: 4.80s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span>  /system/dirmngr.
+    </div>
+    <div class="log-line" style="animation-delay: 4.93s;">
+      [    <span class="error_failed">FAILED</span>    ]   <span class="grey_start">Getting</span> a tech savvy girlfriend. <!-- (＞﹏＜) -->
+    </div>
+    <div class="log-line" style="animation-delay: 4.96s;">
+      [    <span class="error_failed">FAILED</span>    ]   <span class="grey_start">Getting</span> a nice job. <!-- (＞﹏＜) -->
+    </div>
+    <div class="log-line" style="animation-delay: 4.99s;">
+      [    <span class="error_failed">FAILED</span>    ]   <span class="grey_start">Getting</span> laid. <!-- (＞﹏＜) -->
+    </div>
+    <div class="log-line" style="animation-delay: 5.04s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> Slice /system/getty.
+    </div>
+    <div class="log-line" style="animation-delay: 5.05s;">
+      [    <span class="ok-highlight">OK</span>    ]  <span class="grey_start">Created slice Slice</span> /system/gpg-agent.
+    </div>
+    <div class="log-line" style="animation-delay: 5.07s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> /system/gpg-agent-browser.
+    </div>
+        <div class="log-line" style="animation-delay: 5.08s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span>e /system/gpg-agent-extra.
+    </div>
+    <div class="log-line" style="animation-delay: 5.09s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> /system/gpg-agent-ssh.
+    </div>
+    <div class="log-line" style="animation-delay: 5.10s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> /system/keyboxd.
+    </div>
+    <div class="log-line" style="animation-delay: 5.11s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> /system/modprobe.
+    </div>
+    <div class="log-line" style="animation-delay: 5.12s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Created slice Slice</span> and Session Slice.
+    </div>
+    <div class="log-line" style="animation-delay: 5.19s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Started</span> Forward Password Requests to Wall Directory Watch.
+    </div>
+    <div class="log-line" style="animation-delay: 5.28s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Set up automount</span> Arbitrary Executable File Formats File System Automount Point.
+    </div>
+    <div class="log-line" style="animation-delay: 5.35s;">
+      [    <span class="ok-highlight">OK</span>    ]  <span class="grey_start">Reached target</span> Login Prompts.
+    </div>
+    <div class="log-line" style="animation-delay: 5.40s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Image Downloads.
+    </div>
+    <div class="log-line" style="animation-delay: 5.41s;">
+      [    <span class="ok-highlight">OK</span>    ]  <span class="grey_start">Reached target</span> Local Integrity Protected Volumes.
+    </div>
+    <div class="log-line" style="animation-delay: 5.41s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Renote Encrupted Volumes.
+    </div>
+    <div class="log-line" style="animation-delay: 5.42s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Remote File Systems.
+    </div>
+    <div class="log-line" style="animation-delay: 5.42s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Renote Integrity Protected Volumes.
+    </div>
+    <div class="log-line" style="animation-delay: 5.43s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Remote Verity Protected Volumes.
+    </div>
+    <div class="log-line" style="animation-delay: 5.43s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Slice Units.
+    </div>
+    <div class="log-line" style="animation-delay: 5.44s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Swaps.
+    </div>
+    <div class="log-line" style="animation-delay: 5.44s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Reached target</span> Local Verity Protected Volumes.
+    </div>
+    <div class="log-line" style="animation-delay: 5.53s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Device-mapper event daemon FIFOs.
+    </div>
+    <div class="log-line" style="animation-delay: 5.54s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> LVM2 poll daemon socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.55s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> DDI File Sustem Hounter Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.55s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Console Output Muting Service Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.56s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Network Management Resolve Hook Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.56s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Mamespace Resource Manager Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.57s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> User Database Manager Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.68s;">
+           <span class="ok-highlight">  </span>         <span class="grey_start">Mounting</span> Huge Pages File System ...
+    </div>
+    <div class="log-line" style="animation-delay: 5.70s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Mounting</span> POSIX Message Queue File System...
+    </div>
+    <div class="log-line" style="animation-delay: 5.72s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Mounting</span> Kernel Debug File System...
+    </div>
+    <div class="log-line" style="animation-delay: 5.74s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Mounting</span> Kernel Trace File System ...
+    </div>
+    <div class="log-line" style="animation-delay: 5.82s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Authorization Manager Agent Helper.
+    </div>
+    <div class="log-line" style="animation-delay: 5.84s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> OpenSSH Server Socket (sustend-ssh-generator, AF UNIX Local).
+    </div>
+    <div class="log-line" style="animation-delay: 5.85s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Hostname Service Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 5.87s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> User Login Management Varlink Socket.rkd.
+    </div>
+    <div class="log-line" style="animation-delay: 5.88s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Listening on</span> Virtual Machine and Container Registration Service Socket.
+    </div>
+    <div class="log-line" style="animation-delay: 6.02s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Started</span> QEMU Guest Agent.
+    </div>
+    <div class="log-line" style="animation-delay: 6.17s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Starting</span> OpenSSH Daemon...
+    </div>
+    <div class="log-line" style="animation-delay: 6.29s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Starting</span> Permit User Sessions...
+    </div>
+    <div class="log-line" style="animation-delay: 6.44s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Finished</span> Permit User Sessions.
+    </div>
+    <div class="log-line" style="animation-delay: 6.53s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Starting</span> Hold until boot process finishes up...
+    </div>
+    <div class="log-line" style="animation-delay: 6.65s;">
+            <span class="ok-highlight">  </span>        <span class="grey_start">Starting</span> Terminate Plymouth Boot Screen...
+    </div>
+    <div class="log-line" style="animation-delay: 7.0s;">
+      [    <span class="ok-highlight">OK</span>    ]   <span class="grey_start">Finished</span> Hold until boot process finishes up.
+    </div>
+  </div>
+  <div class="log-line" style="animation-delay: 0.04s;">
+    <span class="grey_start">Probing EDD (edd=off to disable)... ok</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.07s;">
+    <span class="grey_start">:: running early hook [udev]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.11s;">
+    <span class="grey_start">Starting systemd-udevd version 260.1-1-arch</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.14s;">
+    <span class="grey_start">:: running early hook [archiso_pxe_nbd]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.17s;">
+    <span class="grey_start">:: running hook [udev]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.22s;">
+    <span class="grey_start">:: Triggering uevents...</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.27s;">
+    <span class="grey_start">:: running hook [memdisk]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.31s;">
+    <span class="grey_start">:: running hook [archiso]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.35s;">
+    <span class="grey_start">:: running hook [archiso loop mnt]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.40s;">
+    <span class="grey_start">:: running hook [archiso pxe common]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.47s;">
+    <span class="grey_start">:: running hook [archiso_pxe_nbd]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.54s;">
+    <span class="grey_start">:: running hook [archiso pxe http]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 0.64s;">
+    <span class="grey_start">:: running hook [archiso_pxe_nfs]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 1.05s;">
+    <span class="grey_start">:: Mounting '/dev/sr0' to '/run/archiso/bootmnt'</span>
+  </div>
+  <div class="log-line" style="animation-delay: 1.20s;">
+    <span class="grey_start">:: Device '/dev/sr0' mounted successfully.</span>
+  </div>
+  <div class="log-line" style="animation-delay: 1.55s;">
+    <span class="grey_start">:: Mounting /run/archiso/cowspace (tmpfs) filesystem, size=46...</span>
+  </div>
+  <div class="log-line" style="animation-delay: 1.85s;">
+    <span class="grey_start">:: Mounting '/dev/loop0' to '/run/archiso/airootfs'</span>
+  </div>
+  <div class="log-line" style="animation-delay: 2.00s;">
+    <span class="grey_start">:: Device '/dev/loop0' mounted successfully.</span>
+  </div>
+  <div class="log-line" style="animation-delay: 2.15s;">
+    <span class="grey_start">:: running late hook [archiso pxe common]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 2.30s;">
+    <span class="grey_start">:: running cleanup hook [udev]</span>
+  </div>
+  <div class="log-line" style="animation-delay: 2.45s;">
+   <span class="grey_start"> </span>
+  </div>
+  <div class="log-line" style="animation-delay: 2.75s;">
+   <span style="color: white; font-weight: bold;">Welcome to <span style="color: cyan;">lainOS !</span></span>
+  </div>
+</div>
+</body>
+</html>

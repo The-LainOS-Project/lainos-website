@@ -1,0 +1,80 @@
+# 1. Clearnet HTTP -> HTTPS Redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name lainos.net www.lainos.net;
+
+    # Simple, clean redirect (no 'if' needed)
+    return 301 https://$host$request_uri;
+}
+
+# 2. Onion Service HTTP (Default server for port 80)
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Explicitly match your onion address (from your Onion-Location header)
+    server_name lainos3cbhrlsc4qyzu6o7jwhvnvakdtohcc46ds5aohdagakddftbid.onion;
+
+    root /var/www/html;
+    index index.html;
+    error_page 404 =404 /404.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    server_tokens off;
+}
+
+# 3. Clearnet HTTPS
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl ipv6only=on;
+
+    server_name lainos.net www.lainos.net;
+    root /var/www/html;
+    index index.html index.htm;
+    add_header Onion-Location http://lainos3cbhrlsc4qyzu6o7jwhvnvakdtohcc46ds5aohdagakddftbid.onion$request_uri;
+
+    # Global 404 for the rest of the site
+    error_page 404 =404 /404.html;
+
+    # ==========================================
+    # WKD (Web Key Directory) Configuration
+    # ==========================================
+    # This intercepts WKD requests BEFORE the general 'location /' block
+    location /.well-known/openpgpkey {
+        # Force binary data type so GnuPG doesn't think it's text
+        default_type application/octet-stream;
+
+        # CRITICAL: Override the global 404 so we don't serve HTML to GnuPG
+        error_page 404 = @plain_404;
+        try_files $uri =404;
+    }
+
+    # Helper block to serve plain text 404s specifically for WKD
+    location @plain_404 {
+        default_type text/plain;
+        return 404 "Not Found\n";
+    }
+    # ==========================================
+
+    # General location block for the rest of the website
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Certbot managed SSL
+    ssl_certificate /etc/letsencrypt/live/lainos.net/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/lainos.net/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # lainOS Security Headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    server_tokens off;
+}

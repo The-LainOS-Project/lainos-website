@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+
+<style>
+
+
+
+.fade_out_screen {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+  background-color: black;
+  opacity: 1;
+  animation: fade_out forwards;
+  animation-duration: 7s;
+}
+
+@keyframes fade_out {
+
+    from {
+        opacity: 1
+    }
+
+    99% {
+        opacity: 0;
+    }
+
+    100% {
+        visibility: hidden;
+        pointer-events: none;
+        opacity: 0;
+    }
+}
+
+
+    .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.gallery a {
+    /*flex: 1 1 calc(25% - 10px);*/
+    max-width: 300px;
+    display: block;
+}
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.1s;
+}
+
+.gallery a:hover img {
+    transform: scale(1.07);
+}
+
+.focus {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(16, 0, 22, 0.77);;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.focus:target {
+    display: flex;
+}
+
+.focus img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.close:hover{
+    background-color: rgba(255, 255, 255, 0) !important; /* no background */
+}
+
+
+</style>
+
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~ LainOS ~</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+
+<body class="scanlines">
+<div class="fade_out_screen"></div>
+    <div id="img1" class="focus"><a href="#gallery" class="close"></a><img src="lainos001.png"></div>
+    <div id="img2" class="focus"><a href="#gallery" class="close"></a><img src="lainos002.png"></div>
+    <div id="img3" class="focus"><a href="#gallery" class="close"></a><img src="lainos003.png"></div>
+    <div id="img4" class="focus"><a href="#gallery" class="close"></a><img src="lainos004.png"></div>
+    <div id="img4" class="focus"><a href="#gallery" class="close"></a><img src="lainos005.png"></div>
+    <div id="img4" class="focus"><a href="#gallery" class="close"></a><img src="lainos006.png"></div>
+    <div id="img4" class="focus"><a href="#gallery" class="close"></a><img src="lainos007.png"></div>
+    <!--<div id="img4" class="focus"><a href="#gallery" class="close"></a><img src="lain4.jpg"></div>
+    <div id="img5" class="focus"><a href="#gallery" class="close"></a><img src="lain7.jpg"></div>-->
+<span style="margin-left: 0px; margin-right:0px; background-color: #13002d; color: white;"><marquee> <strong>「どこに行ったって、人はつながっているのよ。」</strong> </marquee></span>
+
+    <div class="bg">
+</div>
+    <div class="bg-stack">
+        <img src="background1.jpg" class="background1" alt="">
+        <img src="background2.jpg" class="background2" alt="">
+    </div>
+
+    <header class="background-gradient-header">
+        <h1 class="neon-text" style="text-align: center;">
+            <div class="glitch" data-text="lainOS">lainOS</div>
+        </h1>
+    </header>
+
+        <nav class="main-nav" style="position: sticky; top: 0; z-index: 999999; text-align: center; background: black; padding-top: 7px; padding-bottom: 7px;">
+            <a href="#info">[about]</a>
+            <a href="#download">[download]</a>
+            <a href="#contact">[contact/PGP]</a>
+            <a href="#donate">[donate]</a>
+            <a href="/blog.html">[blog]</a>
+            <a href="http://lainos3cbhrlsc4qyzu6o7jwhvnvakdtohcc46ds5aohdagakddftbid.onion/">[onion site]</a>
+        </nav>
+
+    <div class="spacer"></div>
+
+    <div class="content">
+        <section class="section" id="info">
+            <h2>
+             <img src="LainOS.png" alt="" class="section-icon"><a href="https://lain.rocks/">「どこに行ったって、人はつながっているのよ。」</a
+></h2>
+            <h2>lainOS - a free Gentoo-based privacy-respecting platform designed for productivity and maintained by its community.</h2>
+            <p>lainOS is a community-driven Linux distribution based on
+Gentoo, inspired by the anime Serial Experiments Lain. Built
+collaboratively by developers from the global SEL community, it offers a
+ lightweight, powerful, and privacy-respecting platform designed for
+developers, tinkerers, hackers, and fans who connect with the show's
+themes of technology, identity, and the Wired.</p>
+            <p>
+            </p><p>This current iteration of lainOS is the official successor to the Coding Experiments lainOS project from 2002 at https://lainos.org. A history section will be included soon.
+        </p></section>
+
+
+
+        <section class="section" id="gallery">
+            <h2>
+                <img src="LainOS.png" alt="" class="section-icon">
+                Gallery
+            </h2>
+        <div class="gallery">
+            <a href="#img1"><img src="lainosdev1.png"></a>
+            <a href="#img2"><img src="lainosdev2.png"></a>
+            <a href="#img3"><img src="lainosdevscreenshot.png"></a>
+            <a href="#img4"><img src="lazyvim.png"></a>
+            <!--<a href="#img4"><img src="lain4.jpg"></a>
+            <a href="#img5"><img src="lain7.jpg"></a> -->
+        </div>
+        </section>
+
+        <section class="section">
+            <h2>
+                <img src="LainOS.png" alt="" class="section-icon">
+                Features
+            </h2>
+            <ul>
+                <li>Release per Gentoo kernel update, 550MB system idle</li>
+		<p></p>
+		<li>Fully preconfigured Sway desktop : 3-way split-controller DNS mediation architecture {plaintext|encrypted|private}, encrypted mode = unbound -> dnscrypt-proxy, private = tor DNSport</li>
+                <p></p>
+                <li>NeoVim with LazyVim preinstalled and plugins, preinstalled programming languages: clang, clisp, rust, go
+                <p></p>
+                </li><li>Sane defaults(just kidding) : OpenRC service isolation(bwrap namespace isolation, cgroup-v2 resource limiting, seccomp-bpf filtering, Landlock LSM path enforcement), Apparmor(26 profiles), MAC randomization, per boot machine-id randomization, random.trust_cpu=off, 'private-mode' toggle(tor DNSport + snowflake + sdwdate): feds will cry</li>
+                <p></p>
+                <li>Custom CoplandOS-GTK-theme and shell prompt : Git and terminal tools; syntax highlighting etc...</li>
+                <p></p>
+                <li>Privacy stack : wireguard, tor, nyx, i2p, dnscrypt-proxy, OnionShare, torsocks,
+LibreWolf, KeepassXC, kleopatra, keystroke-level online anonymization
+kernel(kloak)</li>
+                <p></p>
+                <li>Watch any anime in the terminal(alone) with ani-cli(because you're a loser weeb)</li>
+                <p></p>
+                <li>lainos-utils system utility scripts suite, System autoconfig script for running Steam on Gentoo
+            </li></ul>
+        </section><section class="section" id="download">
+            <h2>
+                <img src="LainOS.png" alt="" class="section-icon">
+                Download
+            </h2>
+
+            <p style="text-align: center;">↓ Connect to the wired ↓</p>
+            <ul>
+                <li>lainOS layer:03 iso x86_64 (Gentoo/OpenRC): <a href="https://forgejo.lain.rocks/lainOS/lainOS-layer-03/releases" download="" class="glitch-btn"><span class="btn-text">DOWNLOAD</span><span class="slice slice-top">DOWNLOAD</span><span class="slice slice-bottom">DOWNLOAD</span></a></li><br>
+                <li>lainOS Source Code : <a href="https://forgejo.lain.rocks/lainOS" download="" class="glitch-btn"><span class="btn-text">DOWNLOAD</span><span class="slice slice-top">DOWNLOAD</span><span class="slice slice-bottom">DOWNLOAD</span></a></li><br>
+                        <li><p><a href="https://forgejo.lain.rocks/lainOS/Installation/src/branch/main/README.md">lainOS Installation Guide</a></p></li>
+                <li>lainOS layer:02 iso x86_64 (Arch/OpenRC) <a href="https://forgejo.lain.rocks/lainOS/lainOS-layer-02/releases" download="" class="glitch-btn"><span class="btn-text">DOWNLOAD</span><span class="slice slice-top">DOWNLOAD</span><span class="slice slice-bottom">DOWNLOAD</span></a></li><br>                
+                <li>lainOS layer:01 iso x86_64 (Arch/Systemd) <a href="https://forgejo.lain.rocks/lainOS/lainOS/releases" download="" class="glitch-btn"><span class="btn-text">DOWNLOAD</span><span class="slice slice-top">DOWNLOAD</span><span class="slice slice-bottom">DOWNLOAD</span></a></li><br>
+                </li>
+            </ul>
+        </section>
+
+        <section class="section" id="contact">
+            <h2>
+                <img src="LainOS.png" alt="" class="section-icon">
+                Contact / PGP
+            </h2>
+            <p style="text-align: center;">Use Matrix or XMPP for quickest response times.</p>
+            <p>PGP Key ID: 03E8F5B63BAC3998</p>
+  <p>Fingerprint:
+  <a href="https://keys.openpgp.org/search?q=amnesia@lainos.net">456F 268D 14C9 ECCE 1A77 3558 03E8 F5B6 3BAC 3998</a>
+  <br><a href="https://codeberg.org/LainOS/pgp">Verify our PGP Keys on Codeberg</a></br>
+  </p>
+
+        <details class="pgp-block">
+    <summary style="cursor: pointer;">View Public Key Block</summary>
+    <pre style="padding: 7px; overflow-x: auto;">-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mDMEaa5kKxYJKwYBBAHaRw8BAQdAH+Ij1TAaUUDiNaVnrmC9PxM0Q7Eef04cw0yG
+8V3hEEK0IkdyYXlzb24gR2lsZXMgPGFtbmVzaWFAbGFpbm9zLm5ldD6IlgQTFgoA
+PhYhBEVvJo0UyezOGnc1WAPo9bY7rDmYBQJprmQrAhsDBQkFpE8FBQsJCAcCBhUK
+CQgLAgQWAgMBAh4BAheAAAoJEAPo9bY7rDmYlzUBAPwrSffr6cnHcKPM3JFmc1YP
+D8S+UktzR4I6Z/foA90OAQCuhHz5ILbjEtw5RWpY0LfQzMPhkHyh62l42RkJ153x
+AokCMwQQAQoAHRYhBCtT7O9aR6zxmggORrLlAS1Amnr7BQJpsOo6AAoJELLlAS1A
+mnr7NQoP/RfsOJ8EntDw8goooUNJwgo5g4WUiMUTGs9zw6YeuRsY6BJFoAjyVTHs
+wPfOih3mmhRhAxGhlX5PC8nCL6RPpaxnsOfuPu8YFB2eW5NTpibqsxgPJUKPA+Ag
+jV5LSUi6bPFsuyyuTsxMAm/5wgBc7JSufkfFoPLcDkxM5RATatAz+r/FBrh9fpBs
+93DdfSXG6qAEuey9AqbKnya7WXEMUFaSsPG9su/oLs8u/pmlOQkcVYUUFwlwwmMs
+Itf6qHN3Lxc2pKmM60nweyydo0M92+9t6uJasy7xUT1O1bag85+/TzHOTpQoe0vN
+Xnl1IbpCp8A1ieoHQFbibYhOc9emnLYWtRPNiuXJSjQrZ6iAg2I9k+vx33DpTvWB
++Z1PZ7rnx2ahE7SwravudhklZE+Rz0O8eZVV3SlQG9LesefqFQMXnufVruQhccXR
+EQmVF5OPOahXSEe8niItkKPduvxCQeqUTIk+V+8SN7XmKhu+MCzB2UNdaPNUhEGk
+7LRgy5+qT02okULxW4llCdfAFhkQSRS5mhfPOWx0HwY448niTxb91Vq60FzsHxjb
+g3c3B8X8qjgTEQaN+2VwKVVw2oRzqNaE35eQdeejLLdOpmkPFCoIWTqzkEF3UhzA
+w5lJQykmEGfh/zBAWzmdTm79wqADg3tgXcuUMOy4R/nVQbuEkyWOuDgEaa5kKxIK
+KwYBBAGXVQEFAQEHQLwNJAeSgtBMX4TSULDooZXpL0DdLfjSCewHvV1r9ctYAwEI
+B4h+BBgWCgAmFiEERW8mjRTJ7M4adzVYA+j1tjusOZgFAmmuZCsCGwwFCQWkTwUA
+CgkQA+j1tjusOZgQDgEA4G32LTONHCJUr18UfaXO0eOb/sey0ZqoVeok19B+H0YA
+/joVfra7W893mQuwt1Pu4WCMOUAr+Z2AbeAXS5xl5EMM
+=YwL7
+-----END PGP PUBLIC KEY BLOCK-----
+            </pre>
+  </details>
+
+            <h1>Email/Matrix/XMPP/IRC:</h1>
+        </summary>
+    <pre style="padding: 7px; overflow-x: auto;">
+
+Email: amnesia@lainos.net
+
+LainOS Matrix Space: https://matrix.to/#/#lainos:catgirl.cloud
+
+Private XMPP Server(non-federated): amnesia1337@glcuf4hcwbm3lt6grg7jfwwus7sqpuojozfsnbzzcsf7vbm2jcfqckid.onion
+
+LainOS XMPP MUC: private-chat-c75bebbc-50f3-447d-811f-41f83de11811@conference.glcuf4hcwbm3lt6grg7jfwwus7sqpuojozfsnbzzcsf7vbm2jcfqckid.onion
+
+irc.libera.chat #LainOS
+
+
+</pre>
+  </details>
+
+                </section>
+
+        <section class="section" id="donate">
+            <h2>
+                <img src="LainOS.png" alt="" class="section-icon">
+                Donate:
+            </h2>
+            <p style="text-align: center; margin-bottom: 15px;">
+                Please support us if you like what we are doing:
+            </p>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+                <a href="https://liberapay.com/LainOS/" class="liberapay-link" style="font-weight: bold; color: #bb86fc; text-decoration: none; border: 1px solid #bb86fc; padding: 5px 15px; border-radius: 4px;">Liberapay</a>
+            </div>
+
+            <pre style="padding: 7px; line-height: 1.2; overflow-x: auto;">-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+XMR: 83yEr3icd9a55YNKJAkByuBZtCVkrR4sTgzuQji47jMTM32SSffFh1E9u2V5qgs7bVA64f9Db6wt94fpMvvrir9xNScA48E
+
+BTC: bc1qpdg0fuhkl30463xle4hcvrq8z9qqlucr7mqcl4
+
+LTC: ltc1qr3yrgcpdrrxxcfw6ge87mltra6pqfnnxjzegyt
+
+ETH: 0x0F78147fCD0eDcdA887BAb3CC793b7F4dE68A8B3
+
+USDT TRC-20: THtFQoXH81iyH25koxvwZA8Wbq7bS5kap7
+
+DOGE: DDQNLvJJ15nDQscK6uaqPjxWu8EXJDaFGa
+
+SOL: EXoF8fZvwNgivmBTMPGPLToVr6g1uEcQa9bKykXh3njx
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQRFbyaNFMnszhp3NVgD6PW2O6w5mAUCadyZmQAKCRAD6PW2O6w5
+mPqkAP95Z+j7Zzqb1MeQtkvqQzVZl2jRQO58ErDet1ve57JQegEAvC75juxfiO+E
+L6zoG7NhuaH3bK1evGdilPYdwN9s2wQ=
+=cM/C
+-----END PGP SIGNATURE-----
+
+            </pre>
+        </section>
+    </div>
+
+<footer style="background: #33007a; background: linear-gradient(0deg, rgba(51, 0, 122, 0.87) 0%, rgba(117, 2, 184, 0) 100%);">
+  <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+    <p style="margin: 0 0 0.5rem 0;">
+      Background art by <strong>Kein Hasegawa</strong>
+    </p>
+    <div>
+      <a href="#" style="color: white; text-decoration: none;">Terms of use</a>
+      <span style="margin: 0 0.5rem;">|</span>
+      <a href="#" style="color: white; text-decoration: none;">License</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
